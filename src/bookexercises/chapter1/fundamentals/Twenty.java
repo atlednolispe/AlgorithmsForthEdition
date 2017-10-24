@@ -3,7 +3,7 @@ package bookexercises.chapter1.fundamentals;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
- * Write a recursive static method that computes the value of ln(N!)
+ * Write a recursive static method that computes the value of ln(N!), ln(a*b) = ln(a) + ln(b)
  *
  * @author atlednolispe
  * @email atlednolispe@gmail.com
