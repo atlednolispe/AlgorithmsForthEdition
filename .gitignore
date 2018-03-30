@@ -2,3 +2,6 @@
 .idea/
 AlgorithmsForthEdition.iml
 out/
+
+# private
+src/atlednolispe/
