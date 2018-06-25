@@ -136,3 +136,9 @@ public static void shuffle(double[] a)
 API: 调用和实现分离开
 
 ### 1.1.8 字符串
+
+```
+// +的任意参数为String -> String
+
+
+```
