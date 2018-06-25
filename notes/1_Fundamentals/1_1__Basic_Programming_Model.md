@@ -1,5 +1,5 @@
-chapter1-Fundamentals
-=====================
+chapter1.1-Basic Programming Model
+==================================
 
 *算法*:
 有限，确定，有效的并适合用计算机程序来实现的解决问题的方法。算法的主要目的是节约资源，不应该使用资源消耗情况未知的算法。
@@ -143,5 +143,63 @@ API: 调用和实现分离开
 
 ### 1.1.9 输入输出
 
+```java
+// 格式化输出，左侧填充空格，整个字符串长度为6(含.)
+StdOut.printf("%6.2f\n", x);
+
+// 返回格式化字符串
+String.format("%.2f\n", x);
+
+// %m.ns
+// 宽度m，截取的字符串长度为n
+
+// StdIn
+// 标准输入被读取一个值后就不能回退再次读取
+
+// piping突破可以处理的流的长度限制
 ```
+
+### 1.1.10 二分查找
+
+```java
+import java.util.Arrays;
+
+public class BinarySearch
+{
+    public static int rank(int key, int[] a)
+    {  // Array must be sorted.
+        int lo  = 0;
+        int hi = a.length - 1;
+        while (lo <= hi)
+        {  // Key is in a[lo..hi] or not present.
+            int mid = lo + (hi - lo) / 2;
+            if      (key < a[mid]) hi = mid - 1;
+            else if (key > a[mid]) lo = mid + 1;
+            else                   return mid;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args)
+    {
+        int[] whitelist = In.readInts(args[0]);
+        Arrays.sort(whitelist);
+        while (!StdIn.isEmpty())
+        {  // Read key, print if not in whitelist.
+            int key = StdIn.readInt();
+            if (rank(key, whitelist) < 0)
+                StdOut.println(key);
+        }
+    }
+}
+```
+
+## Q & A
+
+```
+// a / b的商向0取整，余数的正负和b可能不同
+
+// ^: 相同为0，不同为1
+
+// A static method can't take another static method as an argument in Java!
 ```
