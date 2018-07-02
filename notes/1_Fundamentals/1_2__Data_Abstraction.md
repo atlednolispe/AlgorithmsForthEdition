@@ -15,3 +15,20 @@ Counter heads = new Counter("heads");
 ```
 // 实例变量声明需要一个可见性修饰符
 ```
+
+## Exercises
+
+### 判断数组中是否存在某个值
+
+[test if an array contains a certain value](https://stackoverflow.com/questions/1128723/how-can-i-test-if-an-array-contains-a-certain-value)
+
+```java
+// for arrays of primitives, it's useless
+import java.util.Arrays;
+Arrays.asList(yourArray).contains(yourValue);
+
+// since java8
+import java.util.stream.IntStream;
+int[] a = {1,2,3,4};
+boolean contains = IntStream.of(a).anyMatch(x -> x == 4);
+```
