@@ -42,6 +42,36 @@ class Date {
     public String toString() {
         return month() + "/" + day() + "/" + year();
     }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that)
+        {
+            return true;
+        }
+        if (that == null)
+        {
+            return false;
+        }
+        if (this.getClass() != that.getClass())
+        {
+            return false;
+        }
+        Date x = (Date) that;
+        // the same class can access another object's private var
+        if (this.month != x.month)         {
+            return false;
+        }
+        if (this.day != x.day)
+        {
+            return false;
+        }
+        if (this.year != x.year)
+        {
+            return false;
+        }
+        return true;
+    }
 }
 
 
