@@ -2,6 +2,8 @@ package bookexercises.chapter1.fundamentals.three;
 
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Iterator;
+
 /**
  * Give the output printed by java Stack for the input
  * it was - the best - of times - - - it  was - the - -
@@ -33,12 +35,31 @@ public class Two {
     }
 }
 
-class Stack<Item> {
+class Stack<Item> implements Iterable<Item> {
     private int N;
     private Node first;
     private class Node {
         Item item;
         Node next;
+    }
+
+    private class ListIterator implements Iterator {
+        private Node current = first;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public Item next() {
+            Item result = current.item;
+            current = current.next;
+            return result;
+        }
+
+        @Override
+        public void remove() {}
     }
 
     public boolean isEmpty() {
@@ -63,4 +84,10 @@ class Stack<Item> {
         N--;
         return result;
     }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return new ListIterator();
+    }
+
 }
