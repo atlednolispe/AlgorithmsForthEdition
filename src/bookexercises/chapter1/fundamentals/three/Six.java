@@ -45,7 +45,7 @@ public class Six {
 
         StdOut.println("Queue before: ");
         showQueue(q);
-        
+
         while (!q.isEmpty())
             stack.push(q.dequeue());
         while (!stack.isEmpty())
