@@ -137,6 +137,23 @@ class ModifyQuickUnionUF {
     {
         return root(i) == root(j);
     }
+
+    /**
+     * Find the largest element in the connected component containing i.
+     */
+    public int find(int i)
+    {
+        int element = i;
+        while (a[i] != i)
+        {
+            if (a[i] > element)
+            {
+                element = a[i];
+            }
+            i = a[i];
+        }
+        return element;
+    }
 }
 ```
 
@@ -286,6 +303,240 @@ public class MonteOfPercolation {
 
     public static void main(String[] args){
         simulate(10);
+    }
+}
+```
+
+## Union-Find interview Questions
+
+```java
+/**
+ * Social network connectivity.
+ * Given a social network containing nn members and a log
+ * file containing mm timestamps at which times pairs of members formed friendships,
+ * design an algorithm to determine the earliest time at which all members are connected
+ * (i.e., every member is a friend of a friend of a friend ... of a friend). Assume that the log
+ * file is sorted by timestamp and that friendship is an equivalence relation. The running
+ * time of your algorithm should be m \log nmlogn or better and use extra space proportional to n.
+ *
+ * Note: these interview questions are ungraded and purely for your own enrichment. To
+ * get a hint, submit a solution.
+ */
+class EarliestAllConnected {
+    private int[] a;
+    private int[] size;
+    private int connectedCount;
+
+    public EarliestAllConnected(int N) {
+        a = new int[N];
+        connectedCount = 1;
+        for (int i = 0; i != a.length; ++i)
+        {
+            a[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    private int root(int i) {
+        while (i != a[i])
+        {
+            /**
+             * make every node to its grandparent
+             *
+             * or make every node to its root
+             */
+            a[i] = a[a[i]];
+            i = a[i];
+        }
+        return i;
+    }
+
+    public boolean allConnected() {
+        return a.length == connectedCount;
+    }
+
+    public void union(int p, int q) {
+        int i = root(p);
+        int j = root(q);
+
+        if (i == j)
+        {
+            return;
+        }
+        if (size[i] <= size[j])
+        {
+            a[i] = j;
+            size[j] += size[i];
+
+            int k = root(0);
+            if (k == j)
+            {
+                connectedCount = size[j];
+            }
+        }
+        else
+        {
+            a[j] = i;
+            size[i] += size[j];
+
+            int k = root(0);
+            if (k == i)
+            {
+                connectedCount = size[i];
+            }
+        }
+    }
+
+    public boolean connected(int i, int j)
+    {
+        return root(i) == root(j);
+    }
+}
+```
+
+```java
+/**
+ * Successor with delete.
+ * Given a set of nn integers S={0,1,...,n−1} and a sequence of requests of the following form:
+ * 1. Remove x from S
+ * 2. Find the successor of x: the smallest y in S such that y≥x.
+ *
+ * design a data type so that all operations (except construction) take logarithmic time or better in the worst case.
+ */
+public class SuccessorOne {
+    private int[][] a;
+
+    public Successor(int N) {
+
+        a = new int[N][2];
+        for (int i = 0; i != N; ++i)
+        {
+            a[i][0] = i - 1;
+            a[i][1] = i + 1;
+        }
+        a[0][0] = -1;
+        a[N-1][1] = -1;
+    }
+
+    public boolean hasNext(int i) {
+        if (a[i][1] == -1)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public int successor(int i) {
+        if (hasNext(i))
+        {
+            int s = a[i][1];
+            a[a[i][0]][1] = a[i][1];
+            a[a[i][1]][0] = a[i][0];
+
+            a[i][1] = a[a[i][1]][1];
+
+            return s;
+        }
+        return -1;
+    }
+}
+
+/**
+ * Successor with delete.
+ * Given a set of nn integers S={0,1,...,n−1} and a sequence of requests of the following form:
+ * 1. Remove x from S
+ * 2. Find the successor of x: the smallest y in S such that y≥x.
+ *
+ * design a data type so that all operations (except construction) take logarithmic time or better in the worst case.
+ */
+class SuccessorTwo {
+    private int[] a;
+    private int[] size;
+
+    public SuccessorTwo(int N) {
+        a = new int[N];
+        size = new int[N];
+        for (int i = 0; i != a.length; ++i)
+        {
+            a[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    private int root(int i) {
+        while (i != a[i])
+        {
+            /**
+             * make every node to its grandparent
+             *
+             * or make every node to its root
+             */
+            a[i] = a[a[i]];
+            i = a[i];
+        }
+        return i;
+    }
+
+    public void union(int p, int q) {
+        int i = root(p);
+        int j = root(q);
+
+        if (i == j)
+        {
+            return;
+        }
+        if (size[i] <= size[j])
+        {
+            a[i] = j;
+            size[j] += size[i];
+        }
+        else
+        {
+            a[j] = i;
+            size[i] += size[j];
+        }
+    }
+
+    public boolean connected(int i, int j)
+    {
+        return root(i) == root(j);
+    }
+
+    /**
+     * Find the largest element in the connected component containing i.
+     */
+    public int find(int i)
+    {
+        int element = i;
+        while (a[i] != i)
+        {
+            if (a[i] > element)
+            {
+                element = a[i];
+            }
+            i = a[i];
+        }
+        return element;
+    }
+
+    public int successor(int i)
+    {
+        if (i == a.length - 1)
+        {
+            /**
+             * last one don't have successor.
+             */
+            return -1;
+        }
+        if (root(i) != i)
+        {
+            /**
+             * i had been removed!
+             */
+            return -1;
+        }
+        union(i, i+1);
+        return find(i);
     }
 }
 ```
