@@ -74,6 +74,45 @@ TODO
  * proportional to n^2 in the worst case. You may assume that you can sort the nn integers in
  * time proportional to n^2 or better.
  */
+public class ThreeSum {
+    public static int threeSum(int[] a)
+    {
+        Arrays.sort(a);
+        int count = 0;
+        for (int i = 0; i != a.length - 2; ++i)
+        {
+            int j = i + 1, k = a.length - 1;
+            while (j < k)
+            {
+                if (-a[i] == a[j] + a[k])
+                {
+                    count++;
+                    break;
+                }
+                else if (-a[i] < a[j] + a[k])
+                {
+                    k--;
+                }
+                else
+                {
+                    j++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args)
+    {
+        int[] a = new int[19];
+        for (int i = 0; i != a.length; ++i)
+        {
+            a[i] = -9 + i;
+        }
+        int count = threeSum(a);
+        StdOut.println("ThreeSum count: " + count);
+    }
+}
 ```
 
 ```java
